@@ -3,14 +3,16 @@
 import argparse
 import os
 
-UBUNTU_DISTROS = ['precise', 'quantal', 'raring', 'saucy', 'trusty', 'utopic', 'vivid', 'wily', 'xenial', 'yakkety', 'zesty', 'artful', 'bionic']
-DEBIAN_DISTROS = ['jessie', 'stretch']
+UBUNTU_DISTROS = ['precise', 'quantal', 'raring', 'saucy', 'trusty', 'utopic', 'vivid', 'wily', 'xenial', 'yakkety', 'zesty', 'artful', 'bionic', 'cosmic', 'disco', 'eoan']
+DEBIAN_DISTROS = ['jessie', 'stretch', 'buster']
 OS_DISTROS = UBUNTU_DISTROS + DEBIAN_DISTROS
 ARCHES = ['i386', 'amd64', 'armhf', 'arm64', 'source']
 ROS1_DISTROS = ['boxturtle', 'cturtle', 'diamondback', 'electric', 'fuerte', 'groovy', 'hydro', 'indigo', 'jade', 'kinetic', 'lunar', 'melodic', 'noetic']
-ROS2_DISTROS = ['ardent', 'bouncy', 'crystal', None]
+ROS2_DISTROS = ['ardent', 'bouncy', 'crystal', 'dashing', None]
 
 ROS_DISTROS = ROS1_DISTROS + ROS2_DISTROS
+
+MIN_DATA_THRESHOLD = 0.001
 
 def count_d(res):
     return -1 * res.count_downloads()
@@ -174,8 +176,9 @@ for arch in ARCHES:
         archdistro = '%s_%s' % (distro, arch)
         archdistro_stats[archdistro] = sum([r.count_downloads(arch=arch, distro=distro) for r in results.values()]) * 100.0/total_downloads
 
+print("Results larger than %s%%" % MIN_DATA_THRESHOLD)
 for k, v in sorted(archdistro_stats.items()):
-    if v > 0.001:
+    if v > MIN_DATA_THRESHOLD:
         print("%s: %.2f %%" % (k, v))
 
 print("Unique debian package versions: %s" % unique_urls)
