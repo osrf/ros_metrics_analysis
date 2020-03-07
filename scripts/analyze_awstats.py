@@ -23,7 +23,10 @@ class Results:
         self.name = package
         self.rosdistro = rosdistro
     def add_url(self, url, count):
-        self.urls[url] = count
+        if url in self.urls:
+            self.urls[url] += count
+        else:
+            self.urls[url] = count
 
     def count_downloads(self, arch=None, distro=None):
         total = 0
@@ -72,7 +75,7 @@ def get_package_info_from_url(basename_beginning):
     return distro
 
 parser = argparse.ArgumentParser(description="process awstats files")
-parser.add_argument('filename', help="filename to load", action='store')
+parser.add_argument('filename', help="filename to load", type=str, nargs='+')
 
 
 args = parser.parse_args()
@@ -88,59 +91,61 @@ AWSTATS_DOWNLOAD_SECTION = {
     '7.4': 'DOWNLOADS'
 }
 
-with open(args.filename, 'r') as fh:
-    inside = False
-    skipped_lines = 0
-    processed_lines = 0
-    shadow_fixed = 0
-    awstats_version = None
-    for line in fh:
-        if not awstats_version:
-            if 'AWSTATS DATA FILE' in line:
-                awstats_version = line.split()[3]
-        # print("processing line %s" % line)
-        if not inside and 'BEGIN_%s ' % AWSTATS_DOWNLOAD_SECTION[awstats_version] in line:
-            inside = True
-            continue
-        if inside and ('END_%s' % AWSTATS_DOWNLOAD_SECTION[awstats_version]) in line:
-            inside = False
-            continue
-        if not inside:
-            skipped_lines += 1
-            # print("SKIPPED, not inside")
-            continue
-        if '/ros-shadow-fixed' in line:
-            shadow_fixed += 1
-            # print("SKIPPED, shadow_fixed")
-            continue
-        if '/ros2-testing' in line:
-            shadow_fixed += 1
-            # print("SKIPPED, ros2-testing")
-            continue
-        elements = line.strip().split()
-        if len(elements) < 4:
-            print("Too few elemnts in %s" % elements)
-            # print("line: %s" % line)
-            skipped_lines += 1
-            continue
-        processed_lines += 1
+for filename in args.filename:
 
-        url = elements[0]
-        count = int(elements[1])
-        # print("url %s" % url)
-        beg = get_beginning_url(url)
-        arch = get_arch_from_url(url)
-        if not beg:
-            #print("failing here %s --- %s" % (beg, url))
-            continue
-        rosdistro = get_package_info_from_url(beg)
-        # print("%s -- %s" % (rosdistro, beg))
-        if beg in results:
-            results[beg].add_url(url, count)
-        else:
-            results[beg] = Results(beg, rosdistro)
-            results[beg].add_url(url, count)
-            # print("hello %s" % beg)
+    with open(filename, 'r') as fh:
+        inside = False
+        skipped_lines = 0
+        processed_lines = 0
+        shadow_fixed = 0
+        awstats_version = None
+        for line in fh:
+            if not awstats_version:
+                if 'AWSTATS DATA FILE' in line:
+                    awstats_version = line.split()[3]
+            # print("processing line %s" % line)
+            if not inside and 'BEGIN_%s ' % AWSTATS_DOWNLOAD_SECTION[awstats_version] in line:
+                inside = True
+                continue
+            if inside and ('END_%s' % AWSTATS_DOWNLOAD_SECTION[awstats_version]) in line:
+                inside = False
+                continue
+            if not inside:
+                skipped_lines += 1
+                # print("SKIPPED, not inside")
+                continue
+            if '/ros-shadow-fixed' in line:
+                shadow_fixed += 1
+                # print("SKIPPED, shadow_fixed")
+                continue
+            if '/ros2-testing' in line:
+                shadow_fixed += 1
+                # print("SKIPPED, ros2-testing")
+                continue
+            elements = line.strip().split()
+            if len(elements) < 4:
+                print("Too few elemnts in %s" % elements)
+                # print("line: %s" % line)
+                skipped_lines += 1
+                continue
+            processed_lines += 1
+
+            url = elements[0]
+            count = int(elements[1])
+            # print("url %s" % url)
+            beg = get_beginning_url(url)
+            arch = get_arch_from_url(url)
+            if not beg:
+                #print("failing here %s --- %s" % (beg, url))
+                continue
+            rosdistro = get_package_info_from_url(beg)
+            # print("%s -- %s" % (rosdistro, beg))
+            if beg in results:
+                results[beg].add_url(url, count)
+            else:
+                results[beg] = Results(beg, rosdistro)
+                results[beg].add_url(url, count)
+                # print("hello %s" % beg)
 
 
 s = sorted(results.values(), key=count_d)
