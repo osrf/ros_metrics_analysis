@@ -24,6 +24,9 @@ class Results:
         else:
             self.bandwidths[month] = bandwidth
 
+    def list_months(self):
+        return self.counts.keys()
+
     def count_downloads(self):
         total = 0
         for _, count in self.counts.items():
@@ -78,9 +81,10 @@ for filename in args.filename:
                     awstats_version = line.split()[3]
                     continue
 
-                if not month and 'FirstTime' in line:
-                    month = line.split()[1][0:5]
-                    continue
+            if not month and line.startswith('FirstTime'):
+                month = line.split()[1][0:6]
+                print(month)
+                continue
 
             # print("processing line %s" % line)
             if not inside and 'BEGIN_%s ' % AWSTATS_DOWNLOAD_SECTION[awstats_version] in line:
@@ -125,10 +129,40 @@ for filename in args.filename:
 
 
 s = sorted(results.values(), key=count_d)
+print("\nTotal Downloads\n")
+print("Title, Downloads, Volume GB")
 for i in range(0, min(100000, len(results))):
-    print("%s: %s Downloads and  %.2f GB" % (s[i].name, s[i].count_downloads(), s[i].count_bandwidth()))
+    print("%s,  %s, %.2f" % (s[i].name, s[i].count_downloads(), s[i].count_bandwidth()))
 
-# print(results.keys())
+
+all_months = set()
+for i in range(0, min(100000, len(results))):
+    all_months |= s[i].list_months()
+all_months = sorted(all_months)
+
+
+print("\nDownload Timeline\n\n")
+
+print("Name, %s" % ', '.join(all_months))
+for i in range(0, min(100000, len(results))):
+    row = [s[i].name]
+    for month in all_months:
+        if month in s[i].counts:
+            row.append(s[i].counts[month])
+        else:
+            row.append(0)
+    print(', '.join([str(a) for a in row]))
+
+print("\nEpisode Comparision\n")
+
+print("Name, %s" % ', '.join([str(i) for i in range(len(all_months))]))
+for i in range(0, min(100000, len(results))):
+    row = [s[i].name]
+    first = False
+    for month in all_months:
+        if month in s[i].counts:
+            row.append(s[i].counts[month])
+    print(', '.join([str(a) for a in row]))
 
 total_downloads = 0
 total_bandwidth = 0
