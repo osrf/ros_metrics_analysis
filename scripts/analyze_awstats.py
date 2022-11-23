@@ -8,7 +8,7 @@ DEBIAN_DISTROS = ['jessie', 'stretch', 'buster', 'bullseye']
 OS_DISTROS = UBUNTU_DISTROS + DEBIAN_DISTROS
 ARCHES = ['i386', 'amd64', 'armhf', 'arm64', 'source']
 ROS1_DISTROS = ['boxturtle', 'cturtle', 'diamondback', 'electric', 'fuerte', 'groovy', 'hydro', 'indigo', 'jade', 'kinetic', 'lunar', 'melodic', 'noetic']
-ROS2_DISTROS = ['ardent', 'bouncy', 'crystal', 'dashing', 'eloquent', 'foxy', 'galactic']
+ROS2_DISTROS = ['ardent', 'bouncy', 'crystal', 'dashing', 'eloquent', 'foxy', 'galactic', 'humble']
 ROS2_ROLLING_DISTROS = ['rolling']
 
 ROS_DISTROS = ROS1_DISTROS + ROS2_DISTROS + ROS2_ROLLING_DISTROS
