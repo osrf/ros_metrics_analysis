@@ -2,13 +2,14 @@
 
 import argparse
 import os
+import urllib
 
 UBUNTU_DISTROS = ['precise', 'quantal', 'raring', 'saucy', 'trusty', 'utopic', 'vivid', 'wily', 'xenial', 'yakkety', 'zesty', 'artful', 'bionic', 'cosmic', 'disco', 'eoan', 'focal']
 DEBIAN_DISTROS = ['jessie', 'stretch', 'buster', 'bullseye']
 OS_DISTROS = UBUNTU_DISTROS + DEBIAN_DISTROS
 ARCHES = ['i386', 'amd64', 'armhf', 'arm64', 'source']
 ROS1_DISTROS = ['boxturtle', 'cturtle', 'diamondback', 'electric', 'fuerte', 'groovy', 'hydro', 'indigo', 'jade', 'kinetic', 'lunar', 'melodic', 'noetic']
-ROS2_DISTROS = ['ardent', 'bouncy', 'crystal', 'dashing', 'eloquent', 'foxy', 'galactic']
+ROS2_DISTROS = ['ardent', 'bouncy', 'crystal', 'dashing', 'eloquent', 'foxy', 'galactic', 'humble']
 ROS2_ROLLING_DISTROS = ['rolling']
 
 ROS_DISTROS = ROS1_DISTROS + ROS2_DISTROS + ROS2_ROLLING_DISTROS
@@ -74,6 +75,25 @@ def get_package_info_from_url(basename_beginning):
 
     distro = name_elements[1]
     return distro
+
+def get_package_version_from_url(basename_beginning):
+    #print(basename_beginning)
+    basename_beginning = urllib.unquote(basename_beginning)
+    v = basename_beginning.split('_')[1].split('-')[0]
+    #print('v is %s' % v)
+    return v
+
+def count_versions(urls):
+    versions = set()
+    for u in urls:
+        versions.add(get_package_version_from_url(u))
+    return len(versions)
+
+#def count_rosdistros(urls):
+#    rosdistros = set()
+#    for u in urls:
+#        rosdistros.add(get_package_version_from_url(u))
+#    return len(rosdistros)
 
 parser = argparse.ArgumentParser(description="process awstats files")
 parser.add_argument('filename', help="filename to load", type=str, nargs='+')
@@ -152,7 +172,9 @@ for filename in args.filename:
 s = sorted(results.values(), key=count_d)
 for i in range(0, min(100000, len(results))):
     if s[i].name[0:3] == 'ros' or s[i].name[0:3] == 'pyt' :
-        print("%s: %s" % (s[i].name, s[i].count_downloads()))
+        versions = count_versions(s[i].urls)
+        #rosdistros = count_rosdistros(s[i].urls)
+        print("%s: %s  versions: %s" % (s[i].name, s[i].count_downloads(), versions))
 
 
 
