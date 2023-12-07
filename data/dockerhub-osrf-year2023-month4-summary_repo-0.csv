@@ -1,0 +1,25 @@
+"Owner","Namespace","Repo","Year","Month","Start Date","Unique IPs","Pull by tag","Pull by digest","Version check"
+"osrf","osrf","sros",2023,4,"2023-04-01",19,31,0,0
+"osrf","osrf","ros_legacy",2023,4,"2023-04-01",55,48,52,6
+"osrf","osrf","ros2_batch_ci_jammy_39_snapshot",2023,4,"2023-04-01",18,29,0,0
+"osrf","osrf","ros2_packaging_jammy_39_snapshot",2023,4,"2023-04-01",22,34,0,1
+"osrf","osrf","debian_arm64",2023,4,"2023-04-01",35,49,0,11
+"osrf","osrf","ros2_packaging_aarch64_jammy_39_snapshot",2023,4,"2023-04-01",26,36,1,1
+"osrf","osrf","lrauv",2023,4,"2023-04-01",19,30,0,0
+"osrf","osrf","ros2",2023,4,"2023-04-01",780,980,344,331
+"osrf","osrf","ros_eol",2023,4,"2023-04-01",19,30,0,0
+"osrf","osrf","mbzirc",2023,4,"2023-04-01",19,31,0,0
+"osrf","osrf","vrx",2023,4,"2023-04-01",18,30,0,0
+"osrf","osrf","vmrc",2023,4,"2023-04-01",18,57,0,0
+"osrf","osrf","ubuntu_arm64",2023,4,"2023-04-01",51,1046,4,26555
+"osrf","osrf","space-ros",2023,4,"2023-04-01",6,5,0,2
+"osrf","osrf","subt-virtual-testbed",2023,4,"2023-04-01",29,42,0,6
+"osrf","osrf","ros2_batch_ci_aarch64_jammy_39_snapshot",2023,4,"2023-04-01",19,30,0,0
+"osrf","osrf","ubuntu_i386",2023,4,"2023-04-01",21,34,0,0
+"osrf","osrf","ubuntu_armhf",2023,4,"2023-04-01",63,2401,0,5193
+"osrf","osrf","gazebo",2023,4,"2023-04-01",23,35,0,3
+"osrf","osrf","trusty-ros-indigo",2023,4,"2023-04-01",18,28,0,0
+"osrf","osrf","ubuntu_32bit",2023,4,"2023-04-01",18,30,0,0
+"osrf","osrf","ros",2023,4,"2023-04-01",33861,49424,1988,23878
+"osrf","osrf","car_demo",2023,4,"2023-04-01",19,31,0,0
+"osrf","osrf","debian_armhf",2023,4,"2023-04-01",20,34,0,0
