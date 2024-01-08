@@ -1,8 +1,11 @@
 #!/usr/bin/env python
+# get wiki edit log from
+# scp ros@ros1.osuosl.org:/var/www/wiki.ros.org/data/edit-log .
+# Set the year and month below
 
 import time
 
-expected_year = 2019
+expected_year = 2023
 expected_month = 7
 
 
@@ -18,5 +21,5 @@ with open('edit-log') as fh:
             count += 1
 
 
-print "Count For %s-%s is %s"%(expected_year, expected_month, count)
-print "Count/day %s"%(count/ 30.0)
+print("Count For {0}-{1} is {2}".format(expected_year, expected_month, count))
+print("Count/day {0}".format(count/ 30.0))
