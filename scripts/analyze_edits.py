@@ -2,7 +2,7 @@
 
 import time
 
-expected_year = 2022
+expected_year = 2024
 expected_month = 7
 
 
@@ -18,5 +18,5 @@ with open('edit-log') as fh:
             count += 1
 
 
-print "Count For %s-%s is %s"%(expected_year, expected_month, count)
-print "Count/day %s"%(count/ 30.0)
+print ("Count For %s-%s is %s"%(expected_year, expected_month, count))
+print ("Count/day %s"%(count/ 30.0))
