@@ -63,6 +63,11 @@ def get_distro_from_url(url):
         if distro in url:
             return distro
     return None
+def get_rodistro_from_url(url):
+    for rodistro in OS_DISTROS :
+        if rodistro in url :
+            return rodistro
+    return None         
 
 def get_package_info_from_url(basename_beginning):
     name_elements = basename_beginning.split('-')
