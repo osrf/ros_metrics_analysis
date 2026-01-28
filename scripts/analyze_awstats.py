@@ -174,6 +174,15 @@ print("Breakdown by rosdistro:")
 for rd in ROS_DISTROS:
     rd_stats[rd] = sum([r.count_downloads() for r in results.values() if r.rosdistro == rd]) * 100.0/total_downloads
     print("%s: %.2f %%" % (rd, rd_stats[rd]))
+
+print("Breakdown by rosdistro total downloads:")
+
+print("==============================")
+for rd in ROS_DISTROS:
+    rd_stats[rd] = sum([r.count_downloads() for r in results.values() if r.rosdistro == rd]) 
+    print("%s: %.2f " % (rd, rd_stats[rd]))
+
+
 print("Breakdown by Arch:")
 for arch in ARCHES:
     arch_stats[arch] = sum([r.count_downloads(arch) for r in results.values()]) * 100.0/total_downloads
