@@ -3,8 +3,8 @@
 import argparse
 import os
 
-UBUNTU_DISTROS = ['precise', 'quantal', 'raring', 'saucy', 'trusty', 'utopic', 'vivid', 'wily', 'xenial', 'yakkety', 'zesty', 'artful', 'bionic', 'cosmic', 'disco', 'eoan', 'focal','jammy']
-DEBIAN_DISTROS = ['jessie', 'stretch', 'buster', 'bullseye']
+UBUNTU_DISTROS = ['precise', 'quantal', 'raring', 'saucy', 'trusty', 'utopic', 'vivid', 'wily', 'xenial', 'yakkety', 'zesty', 'artful', 'bionic', 'cosmic', 'disco', 'eoan', 'focal','jammy',"noble","resolute"]
+DEBIAN_DISTROS = ['jessie', 'stretch', 'buster', 'bullseye','bookwork']
 OS_DISTROS = UBUNTU_DISTROS + DEBIAN_DISTROS
 ARCHES = ['i386', 'amd64', 'armhf', 'arm64', 'source']
 ROS1_DISTROS = ['boxturtle', 'cturtle', 'diamondback', 'electric', 'fuerte', 'groovy', 'hydro', 'indigo', 'jade', 'kinetic', 'lunar', 'melodic', 'noetic']
@@ -89,7 +89,8 @@ other_packages = {}
 
 AWSTATS_DOWNLOAD_SECTION = {
     '6.9': 'SIDER',
-    '7.4': 'DOWNLOADS'
+    '7.4': 'DOWNLOADS',
+    '7.8': 'DOWNLOADS' # Since update
 }
 
 for filename in args.filename:
