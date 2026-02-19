@@ -1,15 +1,15 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
 import os
-import urllib
+from urllib.parse import unquote
 
-UBUNTU_DISTROS = ['precise', 'quantal', 'raring', 'saucy', 'trusty', 'utopic', 'vivid', 'wily', 'xenial', 'yakkety', 'zesty', 'artful', 'bionic', 'cosmic', 'disco', 'eoan', 'focal']
-DEBIAN_DISTROS = ['jessie', 'stretch', 'buster', 'bullseye']
+UBUNTU_DISTROS = ['precise', 'quantal', 'raring', 'saucy', 'trusty', 'utopic', 'vivid', 'wily', 'xenial', 'yakkety', 'zesty', 'artful', 'bionic', 'cosmic', 'disco', 'eoan', 'focal', 'hirsute', 'impish', 'jammy', 'mantic', 'noble']
+DEBIAN_DISTROS = ['jessie', 'stretch', 'buster', 'bullseye', 'bookworm', 'trixie']
 OS_DISTROS = UBUNTU_DISTROS + DEBIAN_DISTROS
 ARCHES = ['i386', 'amd64', 'armhf', 'arm64', 'source']
 ROS1_DISTROS = ['boxturtle', 'cturtle', 'diamondback', 'electric', 'fuerte', 'groovy', 'hydro', 'indigo', 'jade', 'kinetic', 'lunar', 'melodic', 'noetic']
-ROS2_DISTROS = ['ardent', 'bouncy', 'crystal', 'dashing', 'eloquent', 'foxy', 'galactic', 'humble']
+ROS2_DISTROS = ['ardent', 'bouncy', 'crystal', 'dashing', 'eloquent', 'foxy', 'galactic', 'humble', 'iron', 'jazzy']
 ROS2_ROLLING_DISTROS = ['rolling']
 
 ROS_DISTROS = ROS1_DISTROS + ROS2_DISTROS + ROS2_ROLLING_DISTROS
@@ -78,7 +78,7 @@ def get_package_info_from_url(basename_beginning):
 
 def get_package_version_from_url(basename_beginning):
     #print(basename_beginning)
-    basename_beginning = urllib.unquote(basename_beginning)
+    basename_beginning = unquote(basename_beginning)
     v = basename_beginning.split('_')[1].split('-')[0]
     #print('v is %s' % v)
     return v
